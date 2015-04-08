@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# bin/release <build-dir>
+
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+BUILD_DIR=$1
+NAME=$($BIN_DIR/detect $BUILD_DIR) || exit 1
+
+cat <<EOF
+---
+config_vars:
+  PATH: root/bin:/usr/local/bin:/usr/bin:/bin:root/usr/lib/R/bin
+  PYTHONUNBUFFERED: true
+  LIBRARY_PATH: root/usr/lib:root/usr/lib/R/lib
+  LD_LIBRARY_PATH: root/usr/lib:root/usr/lib/R/lib
+  LANG: en_US.UTF-8
+  APP_ROOT_DIR=$BUILD_DIR/root
+  R_HOME=$BUILD_DIR/root/usr/lib/R
+EOF
+
+
+SETTINGS_FILE=$(cd $BUILD_DIR && ls **/main.r | head -1)
+PROJECT=$(dirname $SETTINGS_FILE)
+
+cat <<EOF
+addons:
+  shared-database:5mb
+default_process_types:
+  web:      R $PROJECT/main.r
+EOF

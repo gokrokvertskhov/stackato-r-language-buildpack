@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# bin/detect <build-dir>
+
+ls $BUILD_DIR/**/*.r &> /dev/null && echo R || exit 1
