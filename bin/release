@@ -13,17 +13,17 @@ config_vars:
   LIBRARY_PATH: root/usr/lib:root/usr/lib/R/lib
   LD_LIBRARY_PATH: root/usr/lib:root/usr/lib/R/lib
   LANG: en_US.UTF-8
-  APP_ROOT_DIR=$BUILD_DIR/root
-  R_HOME=$BUILD_DIR/root/usr/lib/R
+  APP_ROOT_DIR: $BUILD_DIR/root
+  R_HOME: $BUILD_DIR/root/usr/lib/R
 EOF
 
 
-SETTINGS_FILE=$(cd $BUILD_DIR && ls **/main.r | head -1)
-PROJECT=$(dirname $SETTINGS_FILE)
+#SETTINGS_FILE=$(cd $BUILD_DIR && ls src/main.r | head -1)
+#PROJECT=$(dirname $SETTINGS_FILE)
 
 cat <<EOF
 addons:
   shared-database:5mb
 default_process_types:
-  web:      R $PROJECT/main.r
+  web:      bash run_R.sh $BUILD_DIR/src/main.r
 EOF

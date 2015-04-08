@@ -4,7 +4,7 @@
 # fail hard
 set -o pipefail
 # fail harder
-set -eu
+set +x
 # move hidden files too, just in case
 shopt -s dotglob
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
@@ -14,5 +14,5 @@ mkdir -p "$CACHE_DIR"
 ENV_DIR=${3:-} # Anvil has none
 ROOT_DIR=$(cd $(dirname $0); cd ..; pwd)
 
-push $BUILD_DIR
+pushd $BUILD_DIR
 tar xzf $BIN_DIR/../R-package.tgz
