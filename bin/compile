@@ -16,3 +16,4 @@ ROOT_DIR=$(cd $(dirname $0); cd ..; pwd)
 
 pushd $BUILD_DIR
 tar xzf $BIN_DIR/../R-package.tgz
+cp $BIN_DIR/run_R.sh $BUILD_DIR/
